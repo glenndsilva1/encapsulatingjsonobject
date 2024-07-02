@@ -11,30 +11,30 @@ public class JsonPersonStr1 {
     Supplier<String> age1;
     Supplier<String> city1;
     
-    public JsonPersonStr1() throws JSONException {
-		json = (JSONObject) new JSONObject(jsonString);
-		 	name1 = () -> {
-			try {
-				return json.getString("name");
-			} catch (JSONException e) {
-                throw new RuntimeException("Error retrieving age from JSON", e);
-			}
-		};
-		 age1 =  () -> {
-			try {
-				return String.valueOf(json.getInt("age")); // Returns age as a string
-			} catch (JSONException e) {
-                throw new RuntimeException("Error retrieving age from JSON", e);
-			}
-		};
-		
-		 city1 = () -> {
-			try {
-				return json.getString("city");
-			} catch(JSONException e){
-				throw new RuntimeException("Error retrieving age from JSON", e);
-			}
-		};
+    public JsonPersonStr1(String jsonstring) throws JSONException {
+    	json = (JSONObject) new JSONObject(jsonString);
+	 	name1 = () -> {
+		try {
+			return json.getString("name");
+		} catch (JSONException e) {
+            throw new RuntimeException("Error retrieving age from JSON", e);
+		}
+	};
+	 age1 =  () -> {
+		try {
+			return String.valueOf(json.getInt("age")); // Returns age as a string
+		} catch (JSONException e) {
+            throw new RuntimeException("Error retrieving age from JSON", e);
+		}
+	};
+	
+	 city1 = () -> {
+		try {
+			return json.getString("city");
+		} catch(JSONException e){
+			throw new RuntimeException("Error retrieving age from JSON", e);
+		}
+	};
     }
     
     public String name() {
@@ -50,13 +50,14 @@ public class JsonPersonStr1 {
     }
     
     public static void main(String args[]) {
-    	try {
-			JsonPersonStr1 p = new JsonPersonStr1();
-			System.out.println("Name : " + p.name());
-			System.out.println("Age : " + p.age());
-			System.out.println("City : " + p.city());
-		}catch (JSONException e){
-			e.printStackTrace();
-		}
+			JsonPersonStr1 p;
+			try {
+				p = new JsonPersonStr1("name:John Doe,age:30,city:New York}");
+				System.out.println("Name : " + p.name());
+				System.out.println("Age : " + p.age());
+				System.out.println("City : " + p.city());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
     }
 }
